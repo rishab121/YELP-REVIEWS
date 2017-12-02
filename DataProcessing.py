@@ -5,7 +5,7 @@ from nltk.corpus import stopwords
 import sklearn as sk
 import string
 
-reviews = pd.read_csv('review.csv')
+reviews = pd.read_csv('dataset/review.csv')
 #print reviews.shape
 #print "head"
 #print reviews.head()
@@ -28,12 +28,13 @@ def remove_chars(text):
     text_list = ''.join(text_list) # will convert it into string
     return remove_stopwords(text_list) # to remove stopwords
 
-
+# Given : some string
+# returns list of string words without stopwords
 def remove_stopwords(text_list):
     filtered_list = []  # my list of filtered words
 
     for word in text_list.split():
-        if word.lower() not in stopwords.words('english'):
+        if str.lower(word) not in stopwords.words('english'):
             filtered_list.append(word)
 
     return filtered_list
@@ -42,7 +43,7 @@ def remove_stopwords(text_list):
 
 feature_matrix = sk.feature_extraction.text.CountVectorizer(analyzer = remove_chars).fit(reviews_text)
 reviews_text = feature_matrix.transform(reviews_text)
-print reviews_text
+#print reviews_text
 
 
 
