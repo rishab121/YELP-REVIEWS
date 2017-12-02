@@ -8,7 +8,6 @@ import re
 
 reviews = pd.read_csv('./dataset/review.csv', chunksize = 10000)
 
-
 def textProcessing(text):
 	letters_only = re.sub('[^a-zA-Z]', ' ', text)
 	words = letters_only.lower().split()
@@ -22,8 +21,12 @@ for min_reviews in reviews:
 	reviews_text = w_reviews['text']
 	reviews_star = w_reviews['stars']
 	
-	feature_matrix = sk.feature_extraction.text.CountVectorizer(analyzer = textProcessing).fit_transform(reviews_text)
-	print feature_matrix.shape
+	feature_matrix = sk.feature_extraction.text.CountVectorizer(analyzer = textProcessing).fit(reviews_text)
+	reviews_text = feature_matrix.transform(reviews_text)
+
+
+	break
+
 
 
 
