@@ -15,17 +15,19 @@ def textProcessing(text):
 	useful_words = [word for word in words if not word in stopwords_eng]
 	return(useful_words)
 
-for min_reviews in reviews:
-	w_reviews = min_reviews[(min_reviews['stars'] == 1) | (min_reviews['stars'] == 5)]
+def getFeatureVector():
+	for min_reviews in reviews:
+		w_reviews = min_reviews[(min_reviews['stars'] == 1) | (min_reviews['stars'] == 5)]
 
-	reviews_text = w_reviews['text']
-	reviews_star = w_reviews['stars']
-	
-	feature_matrix = sk.feature_extraction.text.CountVectorizer(analyzer = textProcessing).fit(reviews_text)
-	reviews_text = feature_matrix.transform(reviews_text)
+		reviews_text = w_reviews['text']
+		reviews_star = w_reviews['stars']
+		
+		feature_matrix = sk.feature_extraction.text.CountVectorizer(analyzer = textProcessing).fit(reviews_text)
+		reviews_text = feature_matrix.transform(reviews_text)
 
+		return reviews_text
 
-	break
+print getFeatureVector().shape
 
 
 
